@@ -144,6 +144,7 @@ func FLBPluginFlushCtx(ctx, data unsafe.Pointer, length C.int, tag *C.char) int 
 			timestamp = time.Now()
 		}
 
+		logrus.Debugf("[rajulm %d] Passing this timestamp here!! %s\n", cloudwatchLogs.PluginInstanceID, timestamp)
 		retCode := cloudwatchLogs.AddEvent(fluentTag, record, timestamp)
 		if retCode != output.FLB_OK {
 			return retCode

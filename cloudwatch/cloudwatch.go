@@ -218,6 +218,7 @@ func (output *OutputPlugin) AddEvent(tag string, record map[interface{}]interfac
 		}
 	}
 
+	logrus.Debugf("[rajulm %d] Appending event %s and timestamp %s, in millis as %d\n", tag, event, timestamp, aws.Int64(timestamp.UnixNano() / 1e6))
 	stream.logEvents = append(stream.logEvents, &cloudwatchlogs.InputLogEvent{
 		Message:   aws.String(event),
 		Timestamp: aws.Int64(timestamp.UnixNano() / 1e6), // CloudWatch uses milliseconds since epoch
