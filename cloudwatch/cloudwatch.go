@@ -446,10 +446,12 @@ func (output *OutputPlugin) putLogEvents(stream *logStream) error {
 	output.timer.Check()
 	stream.updateExpiration()
 
+	logrus.Infof("[rajulm kajeeth] Log events before sorting are %s\n", stream.logEvents)
 	// Log events in a single PutLogEvents request must be in chronological order.
 	sort.Slice(stream.logEvents, func(i, j int) bool {
 		return aws.Int64Value(stream.logEvents[i].Timestamp) < aws.Int64Value(stream.logEvents[j].Timestamp)
 	})
+	logrus.Infof("[rajulm kajeeth] Log events after sorting are %s\n", stream.logEvents)
 	response, err := output.client.PutLogEvents(&cloudwatchlogs.PutLogEventsInput{
 		LogEvents:     stream.logEvents,
 		LogGroupName:  aws.String(output.logGroupName),
