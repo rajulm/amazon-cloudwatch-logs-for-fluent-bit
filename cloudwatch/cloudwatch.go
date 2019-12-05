@@ -14,7 +14,7 @@
 package cloudwatch
 
 import (
-	"encoding/json",
+	"encoding/json"
 	"fmt"
 	"sort"
 	"strings"
